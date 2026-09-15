@@ -13,14 +13,14 @@ test_that("Listing print correctly", {
 
   spec_file <- file.path(system.file(package = "autoslider.core"), "spec.yml")
 
-  full_spec <- spec_file %>%
+  full_spec <- spec_file |>
     read_spec()
 
-  outputs <- full_spec %>%
+  outputs <- full_spec |>
     filter_spec(., program %in% c(
       "t_dm_slide"
-    )) %>%
-    generate_outputs(datasets = testdata) %>%
+    )) |>
+    generate_outputs(datasets = testdata) |>
     decorate_outputs(
       version_label = NULL,
       for_test = TRUE
@@ -43,12 +43,12 @@ test_that("Listing print correctly", {
   # )
   output_dir <- tempdir()
   testthat::expect_output({
-    outputs %>%
+    outputs |>
       generate_slides(outfile = paste0(output_dir, "ai_srep.pptx"), t_cpp = 250, t_lpp = 20)
   })
 
   testthat::expect_no_error({
-    outputs %>%
+    outputs |>
       save_outputs(outfolder = output_dir)
   })
 })
@@ -69,14 +69,14 @@ test_that("using ollama", {
 
   spec_file <- file.path(system.file(package = "autoslider.core"), "spec.yml")
 
-  full_spec <- spec_file %>%
+  full_spec <- spec_file |>
     read_spec()
 
-  outputs <- full_spec %>%
+  outputs <- full_spec |>
     filter_spec(., program %in% c(
       "t_dm_slide"
-    )) %>%
-    generate_outputs(datasets = testdata) %>%
+    )) |>
+    generate_outputs(datasets = testdata) |>
     decorate_outputs(
       version_label = NULL,
       for_test = TRUE
@@ -98,12 +98,12 @@ test_that("using ollama", {
   )
   output_dir <- tempdir()
   testthat::expect_output({
-    outputs %>%
+    outputs |>
       generate_slides(outfile = paste0(output_dir, "ai_srep.pptx"), t_cpp = 250, t_lpp = 20)
   })
 
   testthat::expect_no_error({
-    outputs %>%
+    outputs |>
       save_outputs(outfolder = output_dir)
   })
 })

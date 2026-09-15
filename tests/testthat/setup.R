@@ -43,23 +43,23 @@ expect_snapshot_ggplot <- function(title, fig, width = NA, height = NA) {
   testthat::expect_snapshot_file(path, name)
 }
 
-adsl <- eg_adsl %>%
-  mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination"))) %>%
-  preprocess_t_dd() %>%
-  mutate(DISTRTFL = sample(c("Y", "N"), size = length(TRT01A), replace = TRUE, prob = c(.1, .9))) %>%
-  preprocess_t_ds() %>%
+adsl <- eg_adsl |>
+  mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination"))) |>
+  preprocess_t_dd() |>
+  mutate(DISTRTFL = sample(c("Y", "N"), size = length(TRT01A), replace = TRUE, prob = c(.1, .9))) |>
+  preprocess_t_ds() |>
   mutate(
     DTRFL = if_else(EOTSTT == "DISCONTINUED", "Y", "N"),
     TRTSDT = as.Date(TRTSDTM)
   )
 adsl$FASFL <- adsl$SAFFL
-adsl_two_arm <- adsl %>%
-  dplyr::filter(TRT01A %in% c("A: Drug X", "B: Placebo")) %>%
+adsl_two_arm <- adsl |>
+  dplyr::filter(TRT01A %in% c("A: Drug X", "B: Placebo")) |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
 
-adae <- eg_adae %>%
+adae <- eg_adae |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
-adae <- adae %>% mutate(
+adae <- adae |> mutate(
   dis_flags = ifelse(AEACN == "DRUG WITHDRAWN", TRUE, FALSE),
   red_flags = ifelse(AEACN == "DRUG REDUCED", TRUE, FALSE),
   int_flags = ifelse(AEACN == "DRUG INTERRUPTED", TRUE, FALSE),
@@ -70,7 +70,7 @@ adae <- adae %>% mutate(
 )
 
 # ADAE for AESEV grading
-adae_aesev <- adae %>%
+adae_aesev <- adae |>
   mutate(AESEV = as.factor(case_when(
     AETOXGR %in% c("1", "2") ~ "MILD",
     AETOXGR == "3" ~ "MODERATE",
@@ -78,46 +78,46 @@ adae_aesev <- adae %>%
   )))
 
 # ADAE with custom grouping
-adae_custom <- adae %>%
+adae_custom <- adae |>
   mutate(AEGRP = as.factor(case_when(
     AETOXGR %in% c("1", "2") ~ "Grade 1-2",
     AETOXGR %in% c("3", "4", "5") ~ "Grade 3-5"
   )))
 
 # ADAE for ATOXGR grading
-adae_atoxgr <- adae %>%
+adae_atoxgr <- adae |>
   mutate(ATOXGR = AETOXGR)
 
-adae_two_arm <- adae %>%
-  dplyr::filter(TRT01A %in% c("A: Drug X", "B: Placebo")) %>%
+adae_two_arm <- adae |>
+  dplyr::filter(TRT01A %in% c("A: Drug X", "B: Placebo")) |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
 
-advs <- eg_advs %>%
+advs <- eg_advs |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
 
-adrs <- eg_adrs %>%
-  mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination"))) %>%
+adrs <- eg_adrs |>
+  mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination"))) |>
   dplyr::filter(PARAMCD == "INVET")
 
-adtte <- eg_adtte %>%
+adtte <- eg_adtte |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
 
-adlb <- eg_adlb %>%
+adlb <- eg_adlb |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
 
-adeg <- eg_adeg %>%
+adeg <- eg_adeg |>
   mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
 
 adex <- eg_adex
-adex_tdosint <- adex %>%
-  filter(PARAM == "Total dose administered") %>%
+adex_tdosint <- adex |>
+  filter(PARAM == "Total dose administered") |>
   mutate(
     AVAL = ASEQ / max(ASEQ) * 100,
     PARAMCD = "TDOSINT",
     PARAM = "Fake dose intensity"
   )
-adex_tdurd <- adex %>%
-  filter(PARAM == "Total dose administered") %>%
+adex_tdurd <- adex |>
+  filter(PARAM == "Total dose administered") |>
   mutate(
     AVAL = ASEQ,
     PARAMCD = "TDURD",

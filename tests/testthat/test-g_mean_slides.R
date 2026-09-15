@@ -2,9 +2,9 @@
 library(dplyr)
 library(ggplot2)
 
-adeg <- testdata$adeg %>% filter(PARAMCD == "QT")
-advs <- testdata$advs %>% filter(PARAMCD == "WEIGHT")
-adlb <- testdata$adlb %>% filter(PARAMCD == "IGA")
+adeg <- testdata$adeg |> filter(PARAMCD == "QT")
+advs <- testdata$advs |> filter(PARAMCD == "WEIGHT")
+adlb <- testdata$adlb |> filter(PARAMCD == "IGA")
 
 # tests
 path_to_test <- "_snaps"

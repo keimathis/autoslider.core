@@ -1,6 +1,6 @@
 test_that("save an autoslider output", {
-  output <- t_dm_slide(adsl = testdata$adsl) %>%
-    decorate(title = "test title", footnote = "") %>%
+  output <- t_dm_slide(adsl = testdata$adsl) |>
+    decorate(title = "test title", footnote = "") |>
     list()
 
   outfile <- paste0(tempdir(), "/output.pptx")
