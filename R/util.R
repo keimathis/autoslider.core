@@ -13,7 +13,7 @@ check_and_set_cutoff <- function(data, cutoff) {
     cutoff <- 0
   } else { # check cutoff is the same with the filter
     suffix <- attr(data, "filters")
-    cutoff_suffix <- str_extract(string = paste(suffix, collapse = "_"), pattern = "(\\d+)(?=PER)") %>%
+    cutoff_suffix <- str_extract(string = paste(suffix, collapse = "_"), pattern = "(\\d+)(?=PER)") |>
       as.numeric()
     if (!is.na(cutoff_suffix)) {
       assert_that(are_equal(cutoff, cutoff_suffix))
@@ -504,7 +504,7 @@ lyt_to_side_by_side <- function(lyt, anl, side_by_side = NULL) {
 
   if (!is.null(side_by_side)) {
     if (grepl("Asia", side_by_side)) {
-      tmp_anl <- anl %>% filter(COUNTRY %in% c("CHN", "HKG", "TWN", "KOR", "SGP", "THA", "MYS"))
+      tmp_anl <- anl |> filter(COUNTRY %in% c("CHN", "HKG", "TWN", "KOR", "SGP", "THA", "MYS"))
       tmp_anl$lvl <- "Asia"
       result <- cbind_rtables(
         result,
@@ -516,7 +516,7 @@ lyt_to_side_by_side <- function(lyt, anl, side_by_side = NULL) {
     }
 
     if (grepl("China", side_by_side)) {
-      tmp_anl <- anl %>% filter(COUNTRY == "CHN")
+      tmp_anl <- anl |> filter(COUNTRY == "CHN")
       tmp_anl$lvl <- "China"
       result <- cbind_rtables(result, build_table(lyt = lyt, df = tmp_anl))
     }
@@ -537,9 +537,9 @@ lyt_to_side_by_side_two_data <- function(lyt, anl, alt_counts_df, side_by_side =
   if (!is.null(side_by_side)) {
     if (grepl("Asia", side_by_side)) {
       countries <- c("CHN", "HKG", "TWN", "KOR", "SGP", "THA", "MYS")
-      tmp_anl <- anl %>% filter(COUNTRY %in% countries)
+      tmp_anl <- anl |> filter(COUNTRY %in% countries)
       tmp_anl$lvl <- "Asia"
-      tmp_alt <- alt_counts_df %>% filter(COUNTRY %in% countries)
+      tmp_alt <- alt_counts_df |> filter(COUNTRY %in% countries)
       tmp_alt$lvl <- "Asia"
 
       result <- cbind_rtables(
@@ -553,9 +553,9 @@ lyt_to_side_by_side_two_data <- function(lyt, anl, alt_counts_df, side_by_side =
     }
 
     if (grepl("China", side_by_side)) {
-      tmp_anl <- anl %>% filter(COUNTRY == "CHN")
+      tmp_anl <- anl |> filter(COUNTRY == "CHN")
       tmp_anl$lvl <- "China"
-      tmp_alt <- alt_counts_df %>% filter(COUNTRY == "CHN")
+      tmp_alt <- alt_counts_df |> filter(COUNTRY == "CHN")
       tmp_alt$lvl <- "China"
       result <- cbind_rtables(result, build_table(
         lyt = lyt, df = tmp_anl,
@@ -591,21 +591,21 @@ build_table_header <- function(anl,
   if (is.null(side_by_side)) {
     if (split_by_study) {
       assert_that(length(unique(anl$STUDYID)) > 1)
-      lyt <- lyt %>%
-        split_cols_by(var = "STUDYID") %>%
+      lyt <- lyt |>
+        split_cols_by(var = "STUDYID") |>
         split_cols_by(var = arm)
     } else {
-      lyt <- lyt %>%
-        split_cols_by(var = arm) %>%
+      lyt <- lyt |>
+        split_cols_by(var = arm) |>
         add_overall_col("All Patients")
     }
   } else {
     if (split_by_study) {
       warning("split_by_study argument will be ignored")
     }
-    lyt <- lyt %>%
-      split_cols_by(var = "lvl") %>%
-      split_cols_by(var = arm) %>%
+    lyt <- lyt |>
+      split_cols_by(var = "lvl") |>
+      split_cols_by(var = arm) |>
       add_overall_col("All Patients")
   }
 

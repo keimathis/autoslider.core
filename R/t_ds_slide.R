@@ -7,8 +7,8 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' adsl <- eg_adsl %>%
-#'   mutate(DISTRTFL = sample(c("Y", "N"), size = nrow(eg_adsl), replace = TRUE, prob = c(.1, .9))) %>%
+#' adsl <- eg_adsl |>
+#'   mutate(DISTRTFL = sample(c("Y", "N"), size = nrow(eg_adsl), replace = TRUE, prob = c(.1, .9))) |>
 #'   preprocess_t_ds()
 #' out1 <- t_ds_slide(adsl, "TRT01P")
 #' print(out1)
@@ -28,7 +28,7 @@ t_ds_slide <- function(adsl, arm = "TRT01P",
   assert_that(has_name(adsl, "DCSREAS"))
   assert_that(length(levels(adsl$STDONS)) <= 3)
 
-  adsl1 <- adsl %>%
+  adsl1 <- adsl |>
     mutate(
       STDONS = factor(explicit_na(sas_na(STDONS)),
         levels = c("Alive: On Treatment", "Alive: In Follow-up", "<Missing>"),
@@ -37,8 +37,8 @@ t_ds_slide <- function(adsl, arm = "TRT01P",
       DCSREAS = str_to_title(factor(sas_na(DCSREAS))),
       DCSflag = ifelse(is.na(DCSREAS), "N", "Y"),
       STDONSflag = ifelse(STDONS == "<Missing>", "N", "Y")
-    ) %>%
-    mutate_at(c("STDONS", "DCSREAS"), ~ as.factor(explicit_na(.))) %>%
+    ) |>
+    mutate_at(c("STDONS", "DCSREAS"), ~ as.factor(explicit_na(.))) |>
     formatters::var_relabel(
       STDONS = "On-study Status",
       DCSflag = "Discontinued the study"
@@ -50,28 +50,28 @@ t_ds_slide <- function(adsl, arm = "TRT01P",
 
   lyt <- build_table_header(adsl1, arm, split_by_study = split_by_study, side_by_side = side_by_side)
 
-  lyt <- lyt %>%
+  lyt <- lyt |>
     count_values("SAFFL",
       values = "Y",
       .labels = c(count_fraction = "Received Treatment")
-    ) %>%
+    ) |>
     split_rows_by(
       "STDONSflag",
       split_fun = keep_split_levels("Y"),
-    ) %>%
-    summarize_row_groups(label_fstr = "On-study Status") %>%
+    ) |>
+    summarize_row_groups(label_fstr = "On-study Status") |>
     analyze_vars(
       "STDONS",
       .stats = "count_fraction",
       denom = "N_col",
       na.rm = TRUE,
       # var_labels =  formatters::var_labels(adsl1)["STDONS"]
-    ) %>%
+    ) |>
     split_rows_by(
       "DCSflag",
       split_fun = keep_split_levels("Y"),
-    ) %>%
-    summarize_row_groups(label_fstr = "Discontinued the study") %>%
+    ) |>
+    summarize_row_groups(label_fstr = "Discontinued the study") |>
     analyze_vars(
       "DCSREAS",
       .stats = "count_fraction",

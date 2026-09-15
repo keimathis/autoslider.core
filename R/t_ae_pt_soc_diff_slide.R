@@ -11,9 +11,9 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' adsl <- eg_adsl %>%
+#' adsl <- eg_adsl |>
 #'   dplyr::mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
-#' adae <- eg_adae %>%
+#' adae <- eg_adae |>
 #'   dplyr::mutate(
 #'     TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")),
 #'     ATOXGR = AETOXGR
@@ -37,9 +37,9 @@ t_ae_pt_soc_diff_slide <- function(adsl, adae, arm = "TRT01A", cutoff = NA,
 
     n_r <- data.frame(
       ARM = toupper(names(result@col_info)),
-      N = col_counts(result) %>% as.numeric()
-    ) %>%
-      `colnames<-`(c(paste(arm), "N")) %>%
+      N = col_counts(result) |> as.numeric()
+    ) |>
+      `colnames<-`(c(paste(arm), "N")) |>
       arrange(get(arm))
 
     attr(result, "N") <- n_r

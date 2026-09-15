@@ -45,7 +45,7 @@
 #' # Example 1. When applying to the whole pipeline
 #' library(dplyr)
 #' data <- list(
-#'   adsl = eg_adsl %>% dplyr::mutate(FASFL = SAFFL),
+#'   adsl = eg_adsl |> dplyr::mutate(FASFL = SAFFL),
 #'   adae = eg_adae
 #' )
 #'
@@ -57,16 +57,16 @@
 #'
 #'
 #' spec_file <- system.file("spec.yml", package = "autoslider.core")
-#' spec_file %>%
-#'   read_spec() %>%
-#'   filter_spec(program %in% c("t_dm_slide")) %>%
-#'   generate_outputs(datasets = data) %>%
-#'   decorate_outputs() %>%
+#' spec_file |>
+#'   read_spec() |>
+#'   filter_spec(program %in% c("t_dm_slide")) |>
+#'   generate_outputs(datasets = data) |>
+#'   decorate_outputs() |>
 #'   generate_slides()
 #'
 #' # Example 2. When applying to an rtable object or an rlisting object
 #' adsl <- eg_adsl
-#' t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) %>%
+#' t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) |>
 #'   generate_slides()
 generate_slides <- function(outputs,
                             outfile = paste0(tempdir(), "/output.pptx"),
@@ -243,7 +243,7 @@ generate_slides <- function(outputs,
 #' # Example 1. preview table
 #' library(dplyr)
 #' adsl <- eg_adsl
-#' t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) %>% slides_preview()
+#' t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) |> slides_preview()
 slides_preview <- function(x) {
   if (inherits(x, "VTableTree")) {
     ret <- to_flextable(paginate_table(x, lpp = 20)[[1]])
@@ -424,7 +424,7 @@ ph_with_img <- function(ppt, figure, fig_width, fig_height, figure_loc) {
   on.exit(unlink(file_name))
   ext_img <- external_img(file_name, width = fig_width, height = fig_height)
 
-  ppt %>% ph_with(value = ext_img, location = figure_loc, use_loc_size = FALSE)
+  ppt |> ph_with(value = ext_img, location = figure_loc, use_loc_size = FALSE)
 }
 
 #' Add figure to slides

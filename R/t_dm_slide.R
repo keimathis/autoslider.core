@@ -37,7 +37,7 @@ t_dm_slide <- function(adsl,
     assert_that(has_name(adsl, v))
   }
 
-  adsl1 <- adsl %>%
+  adsl1 <- adsl |>
     select(all_of(c("STUDYID", "USUBJID", arm, vars, extra)))
 
   if (!is.null(side_by_side)) {
@@ -49,7 +49,7 @@ t_dm_slide <- function(adsl,
     side_by_side = side_by_side
   )
 
-  lyt <- lyt %>%
+  lyt <- lyt |>
     analyze_vars(
       na.rm = TRUE,
       .stats = stats,
@@ -67,9 +67,9 @@ t_dm_slide <- function(adsl,
 
     n_r <- data.frame(
       ARM = toupper(names(result@col_info)),
-      N = col_counts(result) %>% as.numeric()
-    ) %>%
-      `colnames<-`(c(paste(arm), "N")) %>%
+      N = col_counts(result) |> as.numeric()
+    ) |>
+      `colnames<-`(c(paste(arm), "N")) |>
       dplyr::arrange(get(arm))
 
     attr(result, "N") <- n_r

@@ -24,7 +24,7 @@
 #' )
 #'
 #' spec_file <- system.file("spec.yml", package = "autoslider.core")
-#' spec <- spec_file %>% read_spec()
+#' spec <- spec_file |> read_spec()
 #'
 #' data <- list(
 #'   adsl = eg_adsl,
@@ -115,9 +115,9 @@ generate_output <-
 #' )
 #'
 #' spec_file <- system.file("spec.yml", package = "autoslider.core")
-#' spec_file %>%
-#'   read_spec() %>%
-#'   filter_spec(output %in% c("t_dm_slide_FAS", "gt_t_dm_slide_FAS")) %>%
+#' spec_file |>
+#'   read_spec() |>
+#'   filter_spec(output %in% c("t_dm_slide_FAS", "gt_t_dm_slide_FAS")) |>
 #'   generate_outputs(datasets = data)
 #'
 generate_outputs <- function(spec, datasets, verbose_level = 2) {

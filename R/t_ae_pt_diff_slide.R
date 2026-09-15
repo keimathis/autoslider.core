@@ -11,9 +11,9 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' adsl <- eg_adsl %>%
+#' adsl <- eg_adsl |>
 #'   dplyr::mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
-#' adae <- eg_adae %>%
+#' adae <- eg_adae |>
 #'   dplyr::mutate(
 #'     TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")),
 #'     ATOXGR = AETOXGR
@@ -37,9 +37,9 @@ t_ae_pt_diff_slide <- function(adsl, adae, arm = "TRT01A", cutoff = NA,
 
       n_r <- data.frame(
         ARM = toupper(names(result@col_info)),
-        N = col_counts(result) %>% as.numeric()
-      ) %>%
-        `colnames<-`(c(paste(arm), "N")) %>%
+        N = col_counts(result) |> as.numeric()
+      ) |>
+        `colnames<-`(c(paste(arm), "N")) |>
         arrange(get(arm))
 
       attr(result, "N") <- n_r
@@ -72,31 +72,31 @@ t_ae_pt_core <- function(adsl, adae, arm, cutoff, diff = FALSE, soc = "NULL",
   )
 
   if (is.null(side_by_side)) {
-    adsl1 <- adsl %>%
+    adsl1 <- adsl |>
       select("STUDYID", "USUBJID", all_of(arm))
   } else if (side_by_side != TRUE) {
-    adsl1 <- adsl %>%
+    adsl1 <- adsl |>
       select("STUDYID", "USUBJID", "RACE", "COUNTRY", all_of(arm))
     adsl1$lvl <- "Global"
   } else {
-    adsl1 <- adsl %>%
+    adsl1 <- adsl |>
       select("STUDYID", "USUBJID", all_of(arm))
     adsl1$lvl <- "Global"
   }
 
-  anl <- adae %>%
+  anl <- adae |>
     mutate_at(
       c("AEDECOD", "AEBODSYS"),
       ~ explicit_na(sas_na(.)) # Replace blank arm with <Missing>
-    ) %>%
-    semi_join(., adsl1, by = c("STUDYID", "USUBJID")) %>%
+    ) |>
+    semi_join(., adsl1, by = c("STUDYID", "USUBJID")) |>
     mutate(
-      ATOXGR = sas_na(ATOXGR) %>% as.factor(),
+      ATOXGR = sas_na(ATOXGR) |> as.factor(),
       ATOXGR2 = case_when(
         ATOXGR %in% c(1, 2) ~ "1 - 2",
         ATOXGR %in% c(3, 4) ~ "3 - 4",
         ATOXGR %in% c(5) ~ "5",
-      ) %>% as.factor()
+      ) |> as.factor()
     )
 
   if (!is.null(side_by_side)) {
@@ -104,17 +104,17 @@ t_ae_pt_core <- function(adsl, adae, arm, cutoff, diff = FALSE, soc = "NULL",
   }
 
   if (soc == "soc") {
-    anl <- anl %>%
+    anl <- anl |>
       mutate(
-        AEBODSYS = sas_na(AEBODSYS) %>% as.factor()
+        AEBODSYS = sas_na(AEBODSYS) |> as.factor()
       )
   }
 
-  anl <- anl %>%
+  anl <- anl |>
     formatters::var_relabel(
       AEBODSYS = "MedDRA System Organ Class",
       AEDECOD = "MedDRA Preferred Term"
-    ) %>%
+    ) |>
     filter(ANL01FL == "Y")
 
   if (nrow(anl) == 0) {
@@ -122,28 +122,28 @@ t_ae_pt_core <- function(adsl, adae, arm, cutoff, diff = FALSE, soc = "NULL",
   } else {
     lyt <- build_table_header(adsl1, arm, split_by_study = split_by_study, side_by_side = side_by_side)
 
-    # lyt <- basic_table() %>%
-    #   split_cols_by(var = arm, split_fun = add_overall_level("All Patients", first = FALSE)) %>%
+    # lyt <- basic_table() |>
+    #   split_cols_by(var = arm, split_fun = add_overall_level("All Patients", first = FALSE)) |>
     #   add_colcounts()
 
     if (soc == "soc") {
-      lyt <- lyt %>%
+      lyt <- lyt |>
         split_rows_by(
           "AEBODSYS",
           child_labels = "visible",
           nested = FALSE,
           indent_mod = -1L,
           split_fun = drop_split_levels
-        ) %>%
+        ) |>
         append_varlabels(anl, "AEBODSYS")
     }
 
-    lyt <- lyt %>%
+    lyt <- lyt |>
       count_occurrences(
         vars = "AEDECOD",
         .indent_mods = c(count_fraction = 1L)
         # , .formats = list(trim_perc1)
-      ) %>%
+      ) |>
       append_topleft(paste("  ", formatters::var_labels(anl["AEDECOD"]), "N (%)"))
 
     if (soc == "soc") {
@@ -162,7 +162,7 @@ t_ae_pt_core <- function(adsl, adae, arm, cutoff, diff = FALSE, soc = "NULL",
 
     result <- lyt_to_side_by_side_two_data(lyt, anl, adsl1, side_by_side)
 
-    result <- result %>%
+    result <- result |>
       sort_at_path(
         path = sort_path,
         scorefun = score_occurrences

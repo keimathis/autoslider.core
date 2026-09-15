@@ -15,7 +15,7 @@
 #' library(dplyr)
 #' adsl <- eg_adsl
 #' adae <- eg_adae
-#' adae_atoxgr <- adae %>% dplyr::mutate(ATOXGR = AETOXGR)
+#' adae_atoxgr <- adae |> dplyr::mutate(ATOXGR = AETOXGR)
 #' t_aesi_slide(adsl, adae, aesi = "CQ01NAM")
 #' t_aesi_slide(adsl, adae, aesi = "CQ01NAM", arm = "ARM", grad_var = "AESEV")
 #' t_aesi_slide(adsl, adae_atoxgr, aesi = "CQ01NAM", grad_var = "ATOXGR")
@@ -40,17 +40,17 @@ t_aesi_slide <- function(adsl, adae, aesi, arm = "ACTARM", grad_var = "AETOXGR")
 
   # Merge ADAE with ADSL and ensure character variables are converted to factors and empty
   # strings and NAs are explicit missing levels.
-  adae2 <- adsl %>%
-    inner_join(adae2, by = c("USUBJID", "TRT01A", "TRT01P", "ARM", "ARMCD", "ACTARM", "ACTARMCD")) %>%
+  adae2 <- adsl |>
+    inner_join(adae2, by = c("USUBJID", "TRT01A", "TRT01P", "ARM", "ARMCD", "ACTARM", "ACTARMCD")) |>
     df_explicit_na()
 
-  not_resolved <- adae2 %>%
-    filter(!(AEOUT %in% c("RECOVERED/RESOLVED", "FATAL", "RECOVERED/RESOLVED WITH SEQUELAE"))) %>%
-    distinct(USUBJID) %>%
+  not_resolved <- adae2 |>
+    filter(!(AEOUT %in% c("RECOVERED/RESOLVED", "FATAL", "RECOVERED/RESOLVED WITH SEQUELAE"))) |>
+    distinct(USUBJID) |>
     mutate(NOT_RESOLVED = "Y")
 
-  adae2 <- adae2 %>%
-    left_join(not_resolved, by = c("USUBJID")) %>%
+  adae2 <- adae2 |>
+    left_join(not_resolved, by = c("USUBJID")) |>
     mutate(
       ALL_RESOLVED = formatters::with_label(
         is.na(NOT_RESOLVED),
@@ -62,7 +62,7 @@ t_aesi_slide <- function(adsl, adae, aesi, arm = "ACTARM", grad_var = "AETOXGR")
       )
     )
 
-  adae2 <- adae2 %>%
+  adae2 <- adae2 |>
     mutate(
       AEDECOD = as.character(AEDECOD),
       WD = formatters::with_label(
@@ -127,7 +127,7 @@ t_aesi_slide <- function(adsl, adae, aesi, arm = "ACTARM", grad_var = "AETOXGR")
     )
 
   if (grad_var %in% c("AETOXGR", "ATOXGR")) {
-    adae2 <- adae2 %>%
+    adae2 <- adae2 |>
       mutate(
         {{ grad_var }} := forcats::fct_recode(get(grad_var),
           "Grade 1" = "1",
@@ -138,7 +138,7 @@ t_aesi_slide <- function(adsl, adae, aesi, arm = "ACTARM", grad_var = "AETOXGR")
         )
       )
   } else if (grad_var %in% c("AESEV", "ASEV")) {
-    adae2 <- adae2 %>%
+    adae2 <- adae2 |>
       mutate(
         {{ grad_var }} := forcats::fct_recode(stringr::str_to_title(get(grad_var), locale = "en"))
       )
@@ -146,26 +146,26 @@ t_aesi_slide <- function(adsl, adae, aesi, arm = "ACTARM", grad_var = "AETOXGR")
 
   aesi_vars <- c("WD", "DSM", "CONTRT", "ALL_RESOLVED", "NOT_RESOLVED", "SER", "REL")
 
-  lyt_adae <- basic_table(show_colcounts = TRUE) %>%
-    split_cols_by(arm) %>%
+  lyt_adae <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by(arm) |>
     count_patients_with_event(
       vars = "USUBJID",
       filters = c("ANL01FL" = "Y"),
       denom = "N_col",
       .labels = c(count_fraction = "Total number of patients with at least one AESI")
-    ) %>%
+    ) |>
     count_values(
       "ANL01FL",
       values = "Y",
       .stats = "count",
       .labels = c(count = "Total number of AESIs"),
       table_names = "total_aes"
-    ) %>%
+    ) |>
     count_occurrences_by_grade(
       var = grad_var,
       var_labels = "Total number of patients with at least one AESI by worst grade",
       show_labels = "visible"
-    ) %>%
+    ) |>
     count_patients_with_flags("USUBJID", flag_variables = aesi_vars, denom = "N_col")
 
   result <- build_table(lyt_adae, df = adae2, alt_counts_df = adsl)

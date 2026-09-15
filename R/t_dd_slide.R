@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' adsl <- eg_adsl %>% preprocess_t_dd()
+#' adsl <- eg_adsl |> preprocess_t_dd()
 #' out1 <- t_dd_slide(adsl, "TRT01A")
 #' print(out1)
 #' generate_slides(out1, paste0(tempdir(), "/dd.pptx"))
@@ -35,26 +35,26 @@ t_dd_slide <- function(adsl,
   } else {
     lyt <- build_table_header(adsl, arm, split_by_study = split_by_study, side_by_side = side_by_side)
 
-    lyt <- lyt %>%
+    lyt <- lyt |>
       count_values(
         "DTHFL",
         values = "Y",
         denom = c("N_col"),
         .labels = c(count_fraction = "All Deaths")
-      ) %>%
+      ) |>
       analyze_vars(
         vars = "DTHCAT", .stats = "count_fraction",
         na_str = "<Missing>",
         var_labels = " ",
         na.rm = TRUE
-      ) %>%
+      ) |>
       # count_patients_with_flags(
       #   "USUBJID",
       #   flag_variables = formatters::var_labels(anl[,c("DTHCAT1", "DTHCAT2", "DTHCAT3")]),
       #   .indent_mods = 1L,
       #   .format = list(trim_perc1),
       #   denom = "n"
-      # ) %>%
+      # ) |>
       append_topleft("N (%)")
 
     result <- lyt_to_side_by_side(lyt, anl, side_by_side)

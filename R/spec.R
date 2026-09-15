@@ -145,7 +145,7 @@ validate_spec <- function(spec) {
 #' @examples
 #' library(dplyr)
 #' spec_file <- system.file("spec.yml", package = "autoslider.core")
-#' spec <- spec_file %>% read_spec()
+#' spec <- spec_file |> read_spec()
 #'
 #' ## Keep only the t_dm_IT output
 #' filter_spec(spec, output == "t_dm_IT")
