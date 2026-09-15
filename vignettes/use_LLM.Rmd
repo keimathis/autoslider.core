@@ -85,9 +85,9 @@ filters::load_filters("path/to/your/filter.yml")
 prompt_list <- get_prompt_list("path/to/your/prompt.yml")
 
 # Generate the initial outputs
-outputs <- spec %>%
-  filter_spec(program %in% c("t_dm_slide")) %>%
-  generate_outputs(datasets = my_datasets) %>%
+outputs <- spec |>
+  filter_spec(program %in% c("t_dm_slide")) |>
+  generate_outputs(datasets = my_datasets) |>
   decorate_outputs()
 ```
 
@@ -124,7 +124,7 @@ Finally, take the modified `outputs_ai` object and pass it to `generate_slides()
 
 
 ```{r, eval = FALSE}
-outputs_ai %>%
+outputs_ai |>
   generate_slides(outfile = "My_AI_Presentation.pptx")
 ```
 
@@ -152,9 +152,9 @@ renders.
 Build and write a deck as usual.
 
 ```{r, eval = FALSE}
-outputs <- spec %>%
-  filter_spec(program %in% c("t_dm_slide", "t_ae_slide")) %>%
-  generate_outputs(datasets = my_datasets) %>%
+outputs <- spec |>
+  filter_spec(program %in% c("t_dm_slide", "t_ae_slide")) |>
+  generate_outputs(datasets = my_datasets) |>
   decorate_outputs()
 
 generate_slides(outputs, outfile = "deck.pptx")

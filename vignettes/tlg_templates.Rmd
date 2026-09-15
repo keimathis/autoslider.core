@@ -138,7 +138,7 @@ write(specs_entry, file = spec_file)
 
 # 1. Load ALL necessary packages
 library(rtables)      # For append_topleft()
-library(dplyr)       # For %>% and other functions
+library(dplyr)       # For |> and other functions
 library(assertthat)   # For assert_that() you had issues with before
 # ... add any other packages your report uses
 
@@ -172,7 +172,7 @@ demography <- function(adsl,
   for (v in c(vars, extra)) {
     assert_that(has_name(adsl, v))
   }
-  adsl1 <- adsl %>%
+  adsl1 <- adsl |>
     select(all_of(c("STUDYID", "USUBJID", arm, vars, extra)))
   if (!is.null(side_by_side)) {
     adsl1$lvl <- "Global"
@@ -181,7 +181,7 @@ demography <- function(adsl,
     split_by_study = split_by_study,
     side_by_side = side_by_side
   )
-  lyt <- lyt %>%
+  lyt <- lyt |>
     analyze_vars(
       na.rm = TRUE,
       .stats = stats,
@@ -196,9 +196,9 @@ demography <- function(adsl,
     arm <- col_paths(result)[[1]][1]
     n_r <- data.frame(
       ARM = toupper(names(result@col_info)),
-      N = col_counts(result) %>% as.numeric()
-    ) %>%
-      `colnames<-`(c(paste(arm), "N")) %>%
+      N = col_counts(result) |> as.numeric()
+    ) |>
+      `colnames<-`(c(paste(arm), "N")) |>
       dplyr::arrange(get(arm))
     attr(result, "N") <- n_r
   }
@@ -212,12 +212,12 @@ Processing our data with the generated `t_dm_slide` script would look like：
 filters::load_filters(filters, overwrite = TRUE)
 # read data
 data <- list(
-  "adsl" = eg_adsl %>%
+  "adsl" = eg_adsl |>
     mutate(
       FASFL = SAFFL, # add FASFL for illustrative purpose for t_pop_slide
       # DISTRTFL is needed for t_ds_slide but is missing in example data
       DISTRTFL = sample(c("Y", "N"), size = length(TRT01A), replace = TRUE, prob = c(.1, .9))
-    ) %>%
+    ) |>
     preprocess_t_ds(), # this preproccessing is required by one of the autoslider.core functions
   "adae" = eg_adae,
   "adtte" = eg_adtte,

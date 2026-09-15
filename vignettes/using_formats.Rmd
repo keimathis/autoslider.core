@@ -41,7 +41,7 @@ autoslider_format <- function(ft,
                               odd_body = "#EBF5FA",
                               even_body = "#D0E4F2",
                               ...) {
-  ft %>%
+  ft |>
     flextable::theme_zebra(
       odd_header = odd_header,
       odd_body = odd_body,
@@ -59,7 +59,7 @@ Wrapper functions call the base theme with predefined colors. This makes it easy
 ```{r, eval = FALSE}
 blue_format <- function(ft, ...) {
   # Calls the base function with specific blue colors
-  ft %>% autoslider_format(
+  ft |> autoslider_format(
     odd_header = "#0B41CD",
     odd_body = "#1482FA",
     even_body = "#BDE3FF",
@@ -72,8 +72,8 @@ For unique tables, you can create a standalone function that doesn't use the bas
 
 ```{r, eval = FALSE}
 black_format_tb <- function(ft, ...) {
-  ft %>%
-    flextable::theme_booktabs() %>%
+  ft |>
+    flextable::theme_booktabs() |>
     flextable::color(color = "blue", part = "header")
   # ... other specific formatting ...
 }
@@ -94,10 +94,10 @@ The workflow involves three steps:
 #### Example: Visualize the output of your format implementation
 
 ```{r, eval= FALSE }
-outputs <- spec_file %>%
-  read_spec() %>%
-  filter_spec(program %in% c("t_dm_slide")) %>%
-  generate_outputs(datasets = my_data) %>%
+outputs <- spec_file |>
+  read_spec() |>
+  filter_spec(program %in% c("t_dm_slide")) |>
+  generate_outputs(datasets = my_data) |>
   decorate_outputs()
 
 # Step 2: Convert a specific output to a flextable object
