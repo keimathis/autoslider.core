@@ -333,7 +333,7 @@ to_flextable.VTableTree <- function(x, table_format = orange_format, ...) {
   header_df <- as.data.frame(mf$strings[1:(nr_header), , drop = FALSE])
 
   # if(concat_header){
-  #   header_df <- lapply(header_df, function(x) {paste0(x, collapse = "\n")}) |> as.data.frame
+  #   header_df <- lapply(header_df, function(x) {paste0(x, collapse = "\n")}) |> as.data.frame()
   # }
 
   # if(!total_col){
