@@ -2,6 +2,8 @@
 
     Code
       l_vs_slide(adsl = adsl, advs = advs, trt_var = "TRT01A")
+    Message
+      sorting incoming data by key columns
     Output
       Listing of Vital Signs: Safety-Evaluable Patients
       

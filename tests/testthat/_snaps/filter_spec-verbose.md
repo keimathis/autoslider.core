@@ -1,7 +1,7 @@
 # Listing print correctly
 
     Code
-      full_spec %>% filter_spec(., program %in% c("t_ds_slide", "t_ds_trt_slide",
+      filter_spec(full_spec, program %in% c("t_ds_slide", "t_ds_trt_slide",
         "i_am_wrong"), verbose = TRUE)
     Output
       v 2/55 outputs matched the filter condition `program %in% c("t_ds_slide", "t_ds_trt_slide", "i_am_wrong")`.
