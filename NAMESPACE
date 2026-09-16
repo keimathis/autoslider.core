@@ -125,7 +125,6 @@ importFrom(checkmate,
 )
 importFrom(cli,cat_bullet)
 importFrom(dplyr,
-  "%>%",
   all_of,
   arrange,
   case_when,
