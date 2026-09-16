@@ -17,7 +17,7 @@ test_that("Listing print correctly", {
     read_spec()
 
   outputs <- full_spec |>
-    filter_spec(., program %in% c(
+    filter_spec(program %in% c(
       "t_dm_slide"
     )) |>
     generate_outputs(datasets = testdata) |>
@@ -73,7 +73,7 @@ test_that("using ollama", {
     read_spec()
 
   outputs <- full_spec |>
-    filter_spec(., program %in% c(
+    filter_spec(program %in% c(
       "t_dm_slide"
     )) |>
     generate_outputs(datasets = testdata) |>

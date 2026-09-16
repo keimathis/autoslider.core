@@ -15,7 +15,7 @@ test_that("Listing print correctly", {
     read_spec()
 
   outputs <- full_spec |>
-    filter_spec(., program %in% c(
+    filter_spec(program %in% c(
       "t_ds_slide",
       "t_dd_slide",
       "t_ae_slide",

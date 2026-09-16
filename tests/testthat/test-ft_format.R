@@ -80,7 +80,7 @@ data <- list(
 
 outputs <- spec_file |>
   read_spec() |>
-  filter_spec(., program %in% c("t_ds_slide", "t_dm_slide", "t_ae_slide")) |>
+  filter_spec(program %in% c("t_ds_slide", "t_dm_slide", "t_ae_slide")) |>
   generate_outputs(datasets = data) |>
   decorate_outputs(
     version_label = NULL

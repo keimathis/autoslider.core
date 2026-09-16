@@ -11,7 +11,7 @@ test_that("Listing print correctly", {
     read_spec()
 
   testthat::expect_snapshot(full_spec |>
-    filter_spec(., program %in% c(
+    filter_spec(program %in% c(
       "t_ds_slide",
       "t_ds_trt_slide",
       "i_am_wrong"
