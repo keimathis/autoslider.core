@@ -37,7 +37,7 @@ t_ae_slide <- function(adsl, adae, arm = "TRT01A",
       c("AEDECOD", "AEBODSYS"),
       ~ explicit_na(sas_na(.)) # Replace blank arm with <Missing>
     ) |>
-    semi_join(., adsl, by = c("STUDYID", "USUBJID")) |>
+    semi_join(adsl, by = c("STUDYID", "USUBJID")) |>
     mutate(
       AETOXGR = sas_na(AETOXGR) |> as.factor()
     ) |>

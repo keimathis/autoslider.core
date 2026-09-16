@@ -93,7 +93,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
       ) |> as.factor(),
       TRT01A = sas_na(TRT01A) |> as.factor()
     ) |>
-    semi_join(., adsl1, by = c("STUDYID", "USUBJID")) |>
+    semi_join(adsl1, by = c("STUDYID", "USUBJID")) |>
     filter(ANL01FL == "Y" & TRTEMFL == "Y" & SAFFL == "Y") |>
     formatters::var_relabel(
       ATOXGR2 = "AE Grade 3 groups",

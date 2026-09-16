@@ -89,7 +89,7 @@ t_ae_pt_core <- function(adsl, adae, arm, cutoff, diff = FALSE, soc = "NULL",
       c("AEDECOD", "AEBODSYS"),
       ~ explicit_na(sas_na(.)) # Replace blank arm with <Missing>
     ) |>
-    semi_join(., adsl1, by = c("STUDYID", "USUBJID")) |>
+    semi_join(adsl1, by = c("STUDYID", "USUBJID")) |>
     mutate(
       ATOXGR = sas_na(ATOXGR) |> as.factor(),
       ATOXGR2 = case_when(

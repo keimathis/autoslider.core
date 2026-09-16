@@ -22,7 +22,7 @@ l_ae_slide <- function(adsl, adae) {
     df_explicit_na()
 
   adae_f <- adae |>
-    semi_join(., adsl_f, by = c("STUDYID", "USUBJID")) |>
+    semi_join(adsl_f, by = c("STUDYID", "USUBJID")) |>
     df_explicit_na() |>
     mutate(
       CPID = paste(SITEID, SUBJID, sep = "/"),

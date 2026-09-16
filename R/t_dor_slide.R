@@ -54,7 +54,7 @@ t_dor_slide <- function(adsl, adtte, arm = "TRT01P", refgroup = NULL) {
       ),
       EVNTDESC = factor(EVNTDESC)
     ) |>
-    semi_join(., adsl, by = c("STUDYID", "USUBJID")) |>
+    semi_join(adsl, by = c("STUDYID", "USUBJID")) |>
     select(STUDYID, USUBJID, {{ arm }}, AVAL, is_event, is_not_event, EVNT1, EVNTDESC) |>
     df_explicit_na(char_as_factor = FALSE)
 
