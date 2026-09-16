@@ -19,5 +19,5 @@ Generate flextable for preview first page
 # Example 1. preview table
 library(dplyr)
 adsl <- eg_adsl
-t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) \%>\% slides_preview()
+t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) |> slides_preview()
 }

@@ -35,7 +35,7 @@ Requires filtering of the datasets (e.g. using SUFFIX in spec.yml)
 \examples{
 \dontshow{if (require('rsvg')) withAutoprint(\{ # examplesIf}
 library(dplyr)
-advs_filtered <- eg_advs \%>\% filter(
+advs_filtered <- eg_advs |> filter(
   PARAMCD == "SYSBP"
 )
 plot_vs <- g_vs_slide(

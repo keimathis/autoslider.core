@@ -38,7 +38,7 @@ filters::load_filters(
 )
 
 spec_file <- system.file("spec.yml", package = "autoslider.core")
-spec <- spec_file \%>\% read_spec()
+spec <- spec_file |> read_spec()
 
 data <- list(
   adsl = eg_adsl,

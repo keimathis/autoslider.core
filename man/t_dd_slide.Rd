@@ -28,7 +28,7 @@ Death table
 }
 \examples{
 library(dplyr)
-adsl <- eg_adsl \%>\% preprocess_t_dd()
+adsl <- eg_adsl |> preprocess_t_dd()
 out1 <- t_dd_slide(adsl, "TRT01A")
 print(out1)
 generate_slides(out1, paste0(tempdir(), "/dd.pptx"))

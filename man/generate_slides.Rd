@@ -83,7 +83,7 @@ The `font_size` argument sets deck-wide defaults; per-slide values win.
 # Example 1. When applying to the whole pipeline
 library(dplyr)
 data <- list(
-  adsl = eg_adsl \%>\% dplyr::mutate(FASFL = SAFFL),
+  adsl = eg_adsl |> dplyr::mutate(FASFL = SAFFL),
   adae = eg_adae
 )
 
@@ -95,16 +95,16 @@ filters::load_filters(
 
 
 spec_file <- system.file("spec.yml", package = "autoslider.core")
-spec_file \%>\%
-  read_spec() \%>\%
-  filter_spec(program \%in\% c("t_dm_slide")) \%>\%
-  generate_outputs(datasets = data) \%>\%
-  decorate_outputs() \%>\%
+spec_file |>
+  read_spec() |>
+  filter_spec(program \%in\% c("t_dm_slide")) |>
+  generate_outputs(datasets = data) |>
+  decorate_outputs() |>
   generate_slides()
 
 # Example 2. When applying to an rtable object or an rlisting object
 adsl <- eg_adsl
-t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) \%>\%
+t_dm_slide(adsl, "TRT01P", c("SEX", "AGE")) |>
   generate_slides()
 \dontshow{\}) # examplesIf}
 }

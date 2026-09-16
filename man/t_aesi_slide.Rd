@@ -30,7 +30,7 @@ adapted from https://insightsengineering.github.io/tlg-catalog/stable/tables/adv
 library(dplyr)
 adsl <- eg_adsl
 adae <- eg_adae
-adae_atoxgr <- adae \%>\% dplyr::mutate(ATOXGR = AETOXGR)
+adae_atoxgr <- adae |> dplyr::mutate(ATOXGR = AETOXGR)
 t_aesi_slide(adsl, adae, aesi = "CQ01NAM")
 t_aesi_slide(adsl, adae, aesi = "CQ01NAM", arm = "ARM", grad_var = "AESEV")
 t_aesi_slide(adsl, adae_atoxgr, aesi = "CQ01NAM", grad_var = "ATOXGR")
