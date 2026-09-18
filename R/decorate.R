@@ -53,7 +53,7 @@ decorate.tbl_roche_summary <- function(x, ...) {
 #' @param paper Orientation and font size as string, e.g. "P8"; "L11"
 #' @param for_test `logic` CICD parameter
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
 #' @param ... Additional arguments passed to the decoration function.
 #' @return No return value, called for side effects
 #' @method decorate VTableTree
@@ -95,7 +95,7 @@ decorate.VTableTree <- function(x, titles = "", footnotes = "", paper = "P8", fo
 #' @param paper Paper size, by default "L11"
 #' @param for_test `logic` CICD parameter
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
 #' @param ... additional arguments. not used.
 #' @return No return value, called for side effects
 #' @export
@@ -131,7 +131,7 @@ decorate.ggplot <- function(x, titles = "", footnotes = "", paper = "L11", for_t
 #' @param paper Orientation and font size as string, e.g. "P8"; "L11"
 #' @param for_test `logic` CICD parameter
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
 #' @param ... Additional arguments. not used.
 #' @return No return value, called for side effects
 #' @method decorate listing_df
@@ -173,7 +173,7 @@ decorate.listing_df <- function(x, titles = "", footnotes = "", paper = "P8", fo
 #' @param paper paper size. default is "L8".
 #' @param for_test `logic` CICD parameter
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
 #' @param ... Additional arguments. not used.
 #' @return No return value, called for side effects
 #' @details
@@ -204,7 +204,7 @@ decorate.grob <-
 #' @param paper paper size. default is "L8".
 #' @param for_test `logic` CICD parameter
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
 #' @param ... Additional arguments. not used.
 #' @return No return value, called for side effects
 #' @details
@@ -234,7 +234,7 @@ decorate.gtsummary <-
 #' @param paper paper size. default is "L11".
 #' @param for_test `logic` CICD parameter
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].
 #' @param ... additional arguments. not used
 #' @details
 #' The paper default paper size, `L11`, indicate that the fontsize is 11.
