@@ -7,7 +7,7 @@
                              Adverse        First Study               Caused by                             Action
                            Event MedDRA         Drug                    Study                               Taken 
       Center/Patient ID   Preferred Term   Administration   Serious     Drug      Analysis Toxicity Grade    (2)  
-      ————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      ------------------------------------------------------------------------------------------------------------
         BRA-1/id-134      dcd B.2.1.2.1      04NOV2020        No         No                  3                2   
                           dcd D.1.1.4.2      04NOV2020        No         No                  3                2   
                           dcd A.1.1.1.2      04NOV2020        Yes        No                  2                2   

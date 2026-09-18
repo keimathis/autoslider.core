@@ -5,7 +5,7 @@
     Output
                                                                                          A: Drug X    B: Placebo    C: Combination
                                                                                           (N=134)       (N=134)        (N=132)    
-      ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      ----------------------------------------------------------------------------------------------------------------------------
       Total number of patients with at least one AESI                                   97 (72.4%)    93 (69.4%)      99 (75.0%)  
       Total number of AESIs                                                                 396           380            465      
       Total number of patients with at least one AESI by worst grade                                                              
@@ -30,7 +30,7 @@
     Output
                                                                                          A: Drug X    B: Placebo    C: Combination
                                                                                           (N=134)       (N=134)        (N=132)    
-      ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      ----------------------------------------------------------------------------------------------------------------------------
       Total number of patients with at least one AESI                                   97 (72.4%)    93 (69.4%)      99 (75.0%)  
       Total number of AESIs                                                                 396           380            465      
       Total number of patients with at least one AESI by worst grade                                                              
@@ -53,7 +53,7 @@
     Output
                                                                                          A: Drug X    B: Placebo    C: Combination
                                                                                           (N=134)       (N=134)        (N=132)    
-      ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+      ----------------------------------------------------------------------------------------------------------------------------
       Total number of patients with at least one AESI                                   97 (72.4%)    93 (69.4%)      99 (75.0%)  
       Total number of AESIs                                                                 396           380            465      
       Total number of patients with at least one AESI by worst grade                                                              
