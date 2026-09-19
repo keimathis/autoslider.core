@@ -225,7 +225,6 @@ data <- list(
   "adlb" = eg_adlb
 )
 demography(data$adsl)
-
 ```
 Following this process, you have successfully generated a reusable `demography` function that processes clinical data, and convert it into a standard demographic table, including statistical insights like range, median, and count fractions to variables AGE, SEX, and RACE.
  
@@ -254,6 +253,5 @@ Feel free to modify the template script to suit your dataset or statistical need
 - Customize labels and formatting
 
 - Modify the summary statistics
-
 
 
