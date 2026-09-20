@@ -111,7 +111,7 @@ initialize_doc_original <- function(doc_original, doc_o) {
 #' @param save_file A logical value. If `TRUE`, the modified document is saved to a file
 #'   after adding the slide.
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `study_id`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `study_id`. See [apply_tokens()].
 #'
 #' @return An `officer::rpptx` object with the new title slide appended.
 #'
@@ -179,7 +179,7 @@ append_title_slides <- function(
 #' @param save_file A logical value. If `TRUE`, the modified document is saved to a file
 #'   after adding the slide.
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in `section_title`. See [apply_tokens()].
+#'   `\{token\}` placeholders in `section_title`. See [apply_tokens()].
 #'
 #' @return An `officer::rpptx` object with the new section header slide appended.
 #'
@@ -242,7 +242,7 @@ append_section_header_slides <- function(
 #' @param save_file A logical value. If `TRUE`, the final modified document is saved
 #'   to a file after all slides have been appended.
 #' @param metadata Named `list` (or `NULL`) of token values used to substitute
-#'   `{token}` placeholders in each slide's text (e.g. `study_id`,
+#'   `\{token\}` placeholders in each slide's text (e.g. `study_id`,
 #'   `section_title`). See [apply_tokens()].
 #'
 #' @return An `officer::rpptx` object with all specified slides appended.

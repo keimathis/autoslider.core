@@ -24,7 +24,7 @@
 #' ADSL <- eg_adsl
 #' ADAE <- eg_adae
 #'
-#' ADAE <- ADAE %>%
+#' ADAE <- ADAE |>
 #'   dplyr::mutate(ATOXGR = AETOXGR)
 #' t_ae_summ_slide(adsl = ADSL, adae = ADAE)
 #'
@@ -74,53 +74,53 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
     }
   }
 
-  adsl1 <- adsl %>%
+  adsl1 <- adsl |>
     select("STUDYID", "USUBJID", "TRT01A")
 
-  pts_gr5 <- adae %>% filter(ATOXGR %in% c(5))
+  pts_gr5 <- adae |> filter(ATOXGR %in% c(5))
 
-  anl <- adae %>%
+  anl <- adae |>
     mutate_at(
       c("AEDECOD", "AEBODSYS"),
       ~ explicit_na(sas_na(.)) # Replace blank arm with <Missing>
-    ) %>%
+    ) |>
     mutate(
-      ATOXGR = sas_na(ATOXGR) %>% as.factor(),
+      ATOXGR = sas_na(ATOXGR) |> as.factor(),
       ATOXGR2 = case_when(
         ATOXGR %in% c(1, 2) ~ "1 - 2",
         ATOXGR %in% c(3, 4) ~ "3 - 4",
         ATOXGR %in% c(5) ~ "5",
-      ) %>% as.factor(),
-      TRT01A = sas_na(TRT01A) %>% as.factor()
-    ) %>%
-    semi_join(., adsl1, by = c("STUDYID", "USUBJID")) %>%
-    filter(ANL01FL == "Y" & TRTEMFL == "Y" & SAFFL == "Y") %>%
+      ) |> as.factor(),
+      TRT01A = sas_na(TRT01A) |> as.factor()
+    ) |>
+    semi_join(adsl1, by = c("STUDYID", "USUBJID")) |>
+    filter(ANL01FL == "Y" & TRTEMFL == "Y" & SAFFL == "Y") |>
     formatters::var_relabel(
       ATOXGR2 = "AE Grade 3 groups",
       ATOXGR = "AE Grade",
       TRT01A = "Actual Treatment 01"
-    ) %>%
+    ) |>
     # ---------- ADAE: Treatment related flags ---------
     mutate(
       TMPFL1_REL0 = AEREL == "Y"
-    ) %>%
+    ) |>
     formatters::var_relabel(
       TMPFL1_REL0 = "Any treatment"
-    ) %>%
+    ) |>
     # ---------- ADAE: Grade 5 and related flags ---------
     mutate(
       TMPFL1_G5 = ATOXGR %in% c(5),
       TMPFL1_G5_REL = ATOXGR %in% c(5) & AEREL == "Y"
-    ) %>%
+    ) |>
     formatters::var_relabel(
       TMPFL1_G5 = "Grade 5 AE",
       TMPFL1_G5_REL = "Treatment-related Grade 5 AE"
-    ) %>%
+    ) |>
     # ---------- ADAE: SAE and related flags ---------
     mutate(
       TMPFL1_SER = AESER == "Y",
       TMPFL1_SER_REL = AESER == "Y" & AEREL == "Y"
-    ) %>%
+    ) |>
     formatters::var_relabel(
       TMPFL1_SER = "Serious AE",
       TMPFL1_SER_REL = "Treatment-related Serious AE"
@@ -128,21 +128,21 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
 
   # ---------- ADAE: Grade 3/4 and related flags ---------
   if (gr34_highest_grade_only == TRUE) {
-    anl <- anl %>%
+    anl <- anl |>
       mutate(
         TMPFL1_G34 = ATOXGR %in% c(3, 4) & !(USUBJID %in% pts_gr5$USUBJID), # Only count the highest grade is 3 or 4
         TMPFL1_G34_REL = ATOXGR %in% c(3, 4) & AEREL == "Y" & !(USUBJID %in% pts_gr5$USUBJID)
-      ) %>%
+      ) |>
       formatters::var_relabel(
         TMPFL1_G34 = "Grade 3-4 AE",
         TMPFL1_G34_REL = "Treatment-related Grade 3-4 AE"
       )
   } else {
-    anl <- anl %>%
+    anl <- anl |>
       mutate(
         TMPFL1_G34 = ATOXGR %in% c(3, 4),
         TMPFL1_G34_REL = ATOXGR %in% c(3, 4) & AEREL == "Y"
-      ) %>%
+      ) |>
       formatters::var_relabel(
         TMPFL1_G34 = "Grade 3-4 AE",
         TMPFL1_G34_REL = "Treatment-related Grade 3-4 AE"
@@ -152,9 +152,9 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
   if (nrow(anl) == 0) {
     return(null_report())
   } else {
-    lyt <- basic_table() %>%
-      split_cols_by(arm, split_fun = add_overall_level("All Patients", first = FALSE)) %>%
-      add_colcounts() %>%
+    lyt <- basic_table() |>
+      split_cols_by(arm, split_fun = add_overall_level("All Patients", first = FALSE)) |>
+      add_colcounts() |>
       count_patients_with_event(
         vars = "USUBJID",
         filters = c("SAFFL" = "Y"),
@@ -163,7 +163,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .labels = c(count_fraction = "All grade AEs, any cause"),
         table_names = "U",
         # .formats = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_REL0 = "Related"),
@@ -171,7 +171,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .indent_mods = 1L,
         var_labels = "TMPFL1 Related"
         # .format = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_G34 = "Grade 3-4 AEs"),
@@ -179,7 +179,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .indent_mods = 0L,
         var_labels = "Grade 3-4 AEs"
         # .format = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_G34_REL = "Related"),
@@ -187,7 +187,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .indent_mods = 1L,
         var_labels = "TMPFL1_G34 Related"
         # .format = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_G5 = "Grade 5 AE"),
@@ -195,7 +195,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .indent_mods = 0L,
         var_labels = "Grade 5 AE"
         # .format = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_G5_REL = "Related"),
@@ -203,7 +203,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .indent_mods = 1L,
         var_labels = "TMPFL1_G5 Related"
         # .format = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_SER = "SAEs"),
@@ -211,7 +211,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
         .indent_mods = 0L,
         var_labels = "SAEs"
         # .format = list(trim_perc1)
-      ) %>%
+      ) |>
       count_patients_with_flags(
         "USUBJID",
         flag_variables = c(TMPFL1_SER_REL = "Related"),
@@ -224,7 +224,7 @@ t_ae_summ_slide <- function(adsl, adae, arm = "TRT01A",
     if (sum(is.na(dose_adjust_flags)) == 0 & sum(is.na(dose_adjust_labels)) == 0) {
       for (i in 1:length(dose_adjust_flags)) {
         text <- paste0(
-          '     lyt <- lyt %>%
+          '     lyt <- lyt |>
        count_patients_with_flags(
          "USUBJID",
          flag_variables = c(', dose_adjust_flags[i], "='", dose_adjust_labels[i],

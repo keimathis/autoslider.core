@@ -30,7 +30,7 @@ the document is initialized from `doc_o`.}
 after adding the slide.}
 
 \item{metadata}{Named `list` (or `NULL`) of token values used to substitute
-`{token}` placeholders in `section_title`. See [apply_tokens()].}
+`\{token\}` placeholders in `section_title`. See [apply_tokens()].}
 }
 \value{
 An `officer::rpptx` object with the new section header slide appended.

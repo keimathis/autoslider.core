@@ -8,10 +8,10 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' adsl <- eg_adsl %>%
+#' adsl <- eg_adsl |>
 #'   dplyr::mutate(TRT01P = factor(TRT01P, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
-#' adtte <- eg_adtte %>%
-#'   dplyr::filter(PARAMCD == "OS") %>%
+#' adtte <- eg_adtte |>
+#'   dplyr::filter(PARAMCD == "OS") |>
 #'   dplyr::mutate(TRT01P = factor(TRT01P, levels = c("A: Drug X", "B: Placebo", "C: Combination")))
 #' out <- t_dor_slide(adsl, adtte)
 #' print(out)
@@ -35,14 +35,14 @@ t_dor_slide <- function(adsl, adtte, arm = "TRT01P", refgroup = NULL) {
   assert_that(length(time_unit) == 1)
 
   if (toupper(time_unit) == "DAYS") {
-    adtte <- adtte %>%
+    adtte <- adtte |>
       dplyr::mutate(AVAL = day2month(AVAL))
   } else if (toupper(time_unit) == "YEARS") {
-    adtte <- adtte %>%
+    adtte <- adtte |>
       dplyr::mutate(AVAL = AVAL * 12)
   }
 
-  adtte_f <- adtte %>%
+  adtte_f <- adtte |>
     dplyr::mutate(
       is_event = CNSR == 0,
       is_not_event = CNSR == 1,
@@ -53,30 +53,30 @@ t_dor_slide <- function(adsl, adtte, arm = "TRT01P", refgroup = NULL) {
         )
       ),
       EVNTDESC = factor(EVNTDESC)
-    ) %>%
-    semi_join(., adsl, by = c("STUDYID", "USUBJID")) %>%
-    select(STUDYID, USUBJID, {{ arm }}, AVAL, is_event, is_not_event, EVNT1, EVNTDESC) %>%
+    ) |>
+    semi_join(adsl, by = c("STUDYID", "USUBJID")) |>
+    select(STUDYID, USUBJID, {{ arm }}, AVAL, is_event, is_not_event, EVNT1, EVNTDESC) |>
     df_explicit_na(char_as_factor = FALSE)
 
-  lyt_02 <- basic_table() %>%
+  lyt_02 <- basic_table() |>
     split_cols_by(
       var = arm,
       ref_group = refgroup
-    ) %>%
-    add_colcounts() %>%
+    ) |>
+    add_colcounts() |>
     count_values(
       vars = "USUBJID",
       values = unique(adtte$USUBJID),
       .labels = c(count = "Responders"),
       .stats = "count"
-    ) %>%
+    ) |>
     analyze_vars(
       vars = "is_event",
       .stats = "count_fraction",
       .labels = c(count_fraction = "With subsequent event (%)"),
       .indent_mods = c(count_fraction = 1L),
       show_labels = "hidden",
-    ) %>%
+    ) |>
     analyze(
       vars = "AVAL",
       afun = s_surv_time_1,

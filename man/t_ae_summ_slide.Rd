@@ -46,7 +46,7 @@ library(dplyr)
 ADSL <- eg_adsl
 ADAE <- eg_adae
 
-ADAE <- ADAE \%>\%
+ADAE <- ADAE |>
   dplyr::mutate(ATOXGR = AETOXGR)
 t_ae_summ_slide(adsl = ADSL, adae = ADAE)
 

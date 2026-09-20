@@ -57,7 +57,7 @@ library(tools)
 
 # 1. Define a initial presentation file
 input <- "My_Presentation.pptx"
-read_pptx() %>% print(target = input)
+read_pptx() |> print(target = input)
 
 expected_output_file <- file.path(
   dirname(input),

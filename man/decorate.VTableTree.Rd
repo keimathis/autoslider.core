@@ -26,7 +26,7 @@
 \item{for_test}{`logic` CICD parameter}
 
 \item{metadata}{Named `list` (or `NULL`) of token values used to substitute
-`{token}` placeholders in `titles`/`footnotes`. See [apply_tokens()].}
+`\{token\}` placeholders in `titles`/`footnotes`. See [apply_tokens()].}
 
 \item{...}{Additional arguments passed to the decoration function.}
 }

@@ -47,7 +47,7 @@ adapted from https://insightsengineering.github.io/tlg-catalog/stable/graphs/oth
 \examples{
 \dontshow{if (require('rsvg')) withAutoprint(\{ # examplesIf}
 library(dplyr)
-advs_filtered <- eg_advs \%>\% filter(
+advs_filtered <- eg_advs |> filter(
   PARAMCD == "SYSBP"
 )
 out1 <- g_mean_general(eg_adsl, advs_filtered)

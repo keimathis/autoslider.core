@@ -11,15 +11,15 @@
 #'
 #' @examples
 #' library(dplyr)
-#' adsl <- eg_adsl %>%
-#'   filter(SAFFL == "Y") %>%
+#' adsl <- eg_adsl |>
+#'   filter(SAFFL == "Y") |>
 #'   mutate(TRT01P = factor(TRT01P, levels = c("A: Drug X", "B: Placebo")))
 #' output_dir <- tempdir()
-#' t_dm_slide(adsl, "TRT01P", c("SEX", "AGE", "RACE", "ETHNIC", "COUNTRY")) %>%
+#' t_dm_slide(adsl, "TRT01P", c("SEX", "AGE", "RACE", "ETHNIC", "COUNTRY")) |>
 #'   decorate(
 #'     title = "Demographic table",
 #'     footnote = ""
-#'   ) %>%
+#'   ) |>
 #'   save_output(
 #'     file_name = file.path(output_dir, "t_dm_SE"),
 #'     save_rds = TRUE
@@ -133,10 +133,10 @@ save_output.dlisting <- function(output, file_name, save_rds = TRUE) {
 #' output_dir <- tempdir()
 #'
 #' spec_file <- system.file("spec.yml", package = "autoslider.core")
-#' read_spec(spec_file) %>%
-#'   filter_spec(program == "t_dm_slide") %>%
-#'   generate_outputs(datasets = data) %>%
-#'   decorate_outputs() %>%
+#' read_spec(spec_file) |>
+#'   filter_spec(program == "t_dm_slide") |>
+#'   generate_outputs(datasets = data) |>
+#'   decorate_outputs() |>
 #'   save_outputs(outfolder = output_dir)
 #'
 save_outputs <- function(outputs,
@@ -226,10 +226,10 @@ save_outputs <- function(outputs,
 #' output_dir <- tempdir()
 #'
 #' spec_file <- system.file("spec.yml", package = "autoslider.core")
-#' read_spec(spec_file) %>%
-#'   filter_spec(program == "t_dm_slide") %>%
-#'   generate_outputs(datasets = data) %>%
-#'   decorate_outputs() %>%
+#' read_spec(spec_file) |>
+#'   filter_spec(program == "t_dm_slide") |>
+#'   generate_outputs(datasets = data) |>
+#'   decorate_outputs() |>
 #'   save_outputs(outfolder = output_dir)
 #'
 #' slides_from_rds(list.files(file.path(output_dir, "t_dm_slide_FAS.rds")))

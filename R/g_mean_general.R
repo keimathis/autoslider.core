@@ -16,7 +16,7 @@
 #' @export
 #' @examplesIf require('rsvg')
 #' library(dplyr)
-#' advs_filtered <- eg_advs %>% filter(
+#' advs_filtered <- eg_advs |> filter(
 #'   PARAMCD == "SYSBP"
 #' )
 #' out1 <- g_mean_general(eg_adsl, advs_filtered)
@@ -28,20 +28,20 @@ g_mean_general <- function(adsl,
                            subtitle = "Plot of Mean and 95% Confidence Limits by Visit.",
                            ...) {
   assert_that(is.string(subtitle))
-  variables <- variables %>% strip_NA() # tern 0.9.4 added facet_var in control_lineplot_vars
+  variables <- variables |> strip_NA() # tern 0.9.4 added facet_var in control_lineplot_vars
   assert_that(has_name(data, c(by_vars, variables)))
   assert_that(has_name(adsl, c(by_vars, variables["group_var"])))
 
-  adsl_f <- adsl %>%
+  adsl_f <- adsl |>
     df_explicit_na()
 
-  data_f <- data %>%
-    mutate(AVISIT = forcats::fct_reorder(AVISIT, AVISITN, min)) %>%
+  data_f <- data |>
+    mutate(AVISIT = forcats::fct_reorder(AVISIT, AVISITN, min)) |>
     dplyr::filter(
       AVISIT != "SCREENING"
-    ) %>%
-    droplevels() %>%
-    df_explicit_na() %>%
+    ) |>
+    droplevels() |>
+    df_explicit_na() |>
     semi_join(adsl_f, by_vars)
 
 

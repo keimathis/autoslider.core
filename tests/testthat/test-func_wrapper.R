@@ -6,7 +6,7 @@ filters::load_filters(
 )
 
 spec_file <- system.file("spec.yml", package = "autoslider.core")
-spec_file <- spec_file %>% read_spec()
+spec_file <- spec_file |> read_spec()
 spec <- spec_file$t_aesi_slide_SE
 
 data <- list(

@@ -69,7 +69,7 @@ test_that("initialize_doc_original test 1: returns existing doc_original", {
 test_that("initialize_doc_original test 2: reads from file when doc_original is NULL", {
   doc_o <- tempfile(fileext = ".pptx")
 
-  minimal_pptx <- officer::read_pptx() %>%
+  minimal_pptx <- officer::read_pptx() |>
     officer::add_slide(layout = "Title and Content", master = "Office Theme")
   print(minimal_pptx, target = doc_o)
 
@@ -84,7 +84,7 @@ test_that("append_title_slides test 1: save file", {
   temp_pptx_file <- tempfile(fileext = ".pptx")
   on.exit(unlink(temp_pptx_file), add = TRUE)
 
-  officer::read_pptx() %>% print(target = temp_pptx_file)
+  officer::read_pptx() |> print(target = temp_pptx_file)
 
   expected_output_file <- file.path(
     dirname(temp_pptx_file),
@@ -109,7 +109,7 @@ test_that("append_section_header_slides test 1: not save file", {
   temp_pptx_file <- tempfile(fileext = ".pptx")
   on.exit(unlink(temp_pptx_file), add = TRUE)
 
-  officer::read_pptx() %>% print(target = temp_pptx_file)
+  officer::read_pptx() |> print(target = temp_pptx_file)
 
   expected_output_file <- file.path(
     dirname(temp_pptx_file),
@@ -140,7 +140,7 @@ test_that("append_all_slides correctly adds multiple slides based on page_list",
   temp_pptx_file <- tempfile(fileext = ".pptx")
   on.exit(unlink(temp_pptx_file), add = TRUE)
 
-  officer::read_pptx() %>% print(target = temp_pptx_file)
+  officer::read_pptx() |> print(target = temp_pptx_file)
 
   expected_output_file <- file.path(
     dirname(temp_pptx_file),
@@ -179,7 +179,7 @@ test_that("append_all_slides test 2: error if page_list exceeds max_pages + 1", 
   temp_pptx_file <- tempfile(fileext = ".pptx")
   on.exit(unlink(temp_pptx_file), add = TRUE)
 
-  officer::read_pptx() %>% print(target = temp_pptx_file)
+  officer::read_pptx() |> print(target = temp_pptx_file)
 
   invalid_page_list <- list(
     list(type = "title", to_page = 1, study_id = "Valid First Slide"),

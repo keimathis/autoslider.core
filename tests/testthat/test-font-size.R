@@ -53,7 +53,7 @@ test_that("built-in formatters accept footer_font_size", {
 test_that("generate_slides honours a per-slide font_size block from the spec", {
   skip_if_not_installed("filters")
 
-  out <- t_dm_slide(adsl, "TRT01A", c("SEX", "AGE")) %>%
+  out <- t_dm_slide(adsl, "TRT01A", c("SEX", "AGE")) |>
     decorate(titles = "Demographics", footnotes = "footnote")
   # emulate what generate_outputs()/decorate_outputs() attach
   attr(out, "spec") <- list(
@@ -69,7 +69,7 @@ test_that("generate_slides honours a per-slide font_size block from the spec", {
 test_that("generate_slides deck-wide font_size default works without a spec", {
   skip_if_not_installed("filters")
 
-  out <- t_dm_slide(adsl, "TRT01A", c("SEX", "AGE")) %>%
+  out <- t_dm_slide(adsl, "TRT01A", c("SEX", "AGE")) |>
     decorate(titles = "Demographics", footnotes = "footnote")
 
   outfile <- withr::local_tempfile(fileext = ".pptx")

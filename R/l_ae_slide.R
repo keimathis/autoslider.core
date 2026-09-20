@@ -18,12 +18,12 @@ l_ae_slide <- function(adsl, adae) {
   )))
 
   # Preprocess data
-  adsl_f <- adsl %>%
+  adsl_f <- adsl |>
     df_explicit_na()
 
-  adae_f <- adae %>%
-    semi_join(., adsl_f, by = c("STUDYID", "USUBJID")) %>%
-    df_explicit_na() %>%
+  adae_f <- adae |>
+    semi_join(adsl_f, by = c("STUDYID", "USUBJID")) |>
+    df_explicit_na() |>
     mutate(
       CPID = paste(SITEID, SUBJID, sep = "/"),
       ASR = paste(AGE, SEX, RACE, sep = "/"),
@@ -49,7 +49,7 @@ l_ae_slide <- function(adsl, adae) {
         AEACN == "NOT APPLICABLE" | AEACN == "NOT EVALUABLE" ~ 6,
         AEACN == "UNKNOWN" ~ 7
       )
-    ) %>%
+    ) |>
     select(
       CPID,
       # ASR,

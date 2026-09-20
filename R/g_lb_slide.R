@@ -18,7 +18,7 @@
 #' @examplesIf require('rsvg')
 #' library(dplyr)
 #'
-#' adlb_filtered <- eg_adlb %>% filter(
+#' adlb_filtered <- eg_adlb |> filter(
 #'   PARAMCD == "CRP"
 #' )
 #' plot_lb <- g_lb_slide(
@@ -43,15 +43,15 @@
 g_lb_slide <- function(adsl, adlb, arm = "TRT01P", paramcd = "PARAM", y = "AVAL",
                        subtitle = "Plot of Mean and 95% Confidence Limits by Visit.", ...) {
   # tern 0.9.4 added facet_var in control_lineplot_vars
-  variables <- control_lineplot_vars(group_var = arm, paramcd = paramcd, y = y) %>%
+  variables <- control_lineplot_vars(group_var = arm, paramcd = paramcd, y = y) |>
     strip_NA()
 
   by_vars <- c("USUBJID", "STUDYID")
   assert_that(is.string(arm))
   assert_that(is.string(paramcd))
   assert_that(is.string(y))
-  assert_that(has_name(adlb, c(by_vars, variables) %>% unique()))
-  assert_that(has_name(adsl, c(by_vars, arm) %>% unique()))
+  assert_that(has_name(adlb, c(by_vars, variables) |> unique()))
+  assert_that(has_name(adsl, c(by_vars, arm) |> unique()))
   assert_that(is.string(subtitle))
 
   g_mean_general(

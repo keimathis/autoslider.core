@@ -1,7 +1,7 @@
 test_that("Test adverse event table creation of t_ae_slide (Adverse Events for Patient)", {
-  adsl <- eg_adsl %>%
+  adsl <- eg_adsl |>
     dplyr::mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
-  adae <- eg_adae %>%
+  adae <- eg_adae |>
     dplyr::mutate(
       TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")),
       ATOXGR = AETOXGR
@@ -11,9 +11,9 @@ test_that("Test adverse event table creation of t_ae_slide (Adverse Events for P
 })
 
 test_that("Test adverse event table creation of t_ae_slide with null_report", {
-  adsl <- eg_adsl %>%
+  adsl <- eg_adsl |>
     dplyr::mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
-  adae <- eg_adae %>%
+  adae <- eg_adae |>
     dplyr::mutate(
       TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")),
       ATOXGR = AETOXGR

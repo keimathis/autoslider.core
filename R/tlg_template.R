@@ -43,7 +43,7 @@ use_template <- function(template = "t_dm_slide",
 
   # Original validation logic for when save_path is provided
   assertthat::has_extension(save_path, ext = "R")
-  assertthat::is.writeable(save_path %>% dirname())
+  assertthat::is.writeable(save_path |> dirname())
 
 
   # Build expected full path

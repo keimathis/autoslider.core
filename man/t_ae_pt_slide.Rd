@@ -43,9 +43,9 @@ Adverse event table
 
 library(dplyr)
 # Example 1
-adsl <- eg_adsl \%>\%
+adsl <- eg_adsl |>
   dplyr::mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
-adae <- eg_adae \%>\%
+adae <- eg_adae |>
   dplyr::mutate(
     TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")),
     ATOXGR = AETOXGR

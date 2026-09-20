@@ -53,10 +53,10 @@ filters::load_filters(
 output_dir <- tempdir()
 
 spec_file <- system.file("spec.yml", package = "autoslider.core")
-read_spec(spec_file) \%>\%
-  filter_spec(program == "t_dm_slide") \%>\%
-  generate_outputs(datasets = data) \%>\%
-  decorate_outputs() \%>\%
+read_spec(spec_file) |>
+  filter_spec(program == "t_dm_slide") |>
+  generate_outputs(datasets = data) |>
+  decorate_outputs() |>
   save_outputs(outfolder = output_dir)
 \dontshow{\}) # examplesIf}
 }

@@ -11,11 +11,11 @@ test_that("Listing print correctly", {
 
   spec_file <- file.path(system.file(package = "autoslider.core"), "spec.yml")
 
-  full_spec <- spec_file %>%
+  full_spec <- spec_file |>
     read_spec()
 
-  outputs <- full_spec %>%
-    filter_spec(., program %in% c(
+  outputs <- full_spec |>
+    filter_spec(program %in% c(
       "t_ds_slide",
       "t_dd_slide",
       "t_ae_slide",
@@ -30,8 +30,8 @@ test_that("Listing print correctly", {
       "gt_t_dm_slide",
       "t_ae_summ_slide",
       "l_ae_slide"
-    )) %>%
-    generate_outputs(datasets = testdata) %>%
+    )) |>
+    generate_outputs(datasets = testdata) |>
     decorate_outputs(
       version_label = NULL,
       for_test = TRUE
@@ -39,13 +39,13 @@ test_that("Listing print correctly", {
 
   output_dir <- tempdir()
   testthat::expect_no_error({
-    outputs %>%
+    outputs |>
       generate_slides(outfile = paste0(output_dir, "/srep.pptx"), t_cpp = 250,
                       t_lpp = 50, fig_editable = TRUE)
   })
 
   testthat::expect_no_error({
-    outputs %>%
+    outputs |>
       save_outputs(outfolder = output_dir)
   })
 })

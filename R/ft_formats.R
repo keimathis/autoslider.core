@@ -29,18 +29,18 @@ autoslider_format <- function(ft,
                               body_font_size = 12,
                               header_font_size = 14,
                               footer_font_size = body_font_size) {
-  ft %>%
+  ft |>
     theme_zebra(
       odd_header = odd_header,
       odd_body = odd_body,
       even_header = odd_header,
       even_body = even_body
-    ) %>%
-    font(fontname = font_name, part = "all") %>%
-    fontsize(size = body_font_size, part = "body") %>%
-    color(color = "white", part = "header") %>%
-    fontsize(size = header_font_size, part = "header") %>%
-    fontsize(size = footer_font_size, part = "footer") %>%
+    ) |>
+    font(fontname = font_name, part = "all") |>
+    fontsize(size = body_font_size, part = "body") |>
+    color(color = "white", part = "header") |>
+    fontsize(size = header_font_size, part = "header") |>
+    fontsize(size = footer_font_size, part = "footer") |>
     bold(part = "header")
 }
 
@@ -54,7 +54,7 @@ autoslider_format <- function(ft,
 #'
 #' @export
 blue_format <- function(ft, ...) {
-  ft %>% autoslider_format(
+  ft |> autoslider_format(
     odd_header = "#0B41CD",
     odd_body = "#1482FA",
     even_body = "#BDE3FF",
@@ -71,7 +71,7 @@ blue_format <- function(ft, ...) {
 #'
 #' @export
 orange_format <- function(ft, ...) {
-  ft %>% autoslider_format(
+  ft |> autoslider_format(
     odd_header = "#ED4A0D",
     odd_body = "#FF7D29",
     even_body = "#FFBD69",
@@ -88,7 +88,7 @@ orange_format <- function(ft, ...) {
 #'
 #' @export
 red_format <- function(ft, ...) {
-  ft %>% autoslider_format(
+  ft |> autoslider_format(
     odd_header = "#C40000",
     odd_body = "#FF1F26",
     even_body = "#FF8782",
@@ -106,7 +106,7 @@ red_format <- function(ft, ...) {
 #'
 #' @export
 purple_format <- function(ft, ...) {
-  ft %>% autoslider_format(
+  ft |> autoslider_format(
     odd_header = "#BC36F0",
     odd_body = "#E085FC",
     even_body = "#F2D4FF",
@@ -126,10 +126,10 @@ autoslider_dose_format <- function(ft, header_vals = names(ft$body$dataset)) {
   # The original implementation used delete_rows and add_header_row, which can be
   # brittle. Using set_header_labels is the idiomatic and more robust way
   # to simply change the text of the header row. This avoids the colwidths error.
-  ft %>%
-    theme_booktabs() %>%
-    # set_header_labels(values = header_vals) %>%
-    bold(part = "header") %>%
+  ft |>
+    theme_booktabs() |>
+    # set_header_labels(values = header_vals) |>
+    bold(part = "header") |>
     border_remove()
 }
 
@@ -144,15 +144,15 @@ autoslider_dose_format <- function(ft, header_vals = names(ft$body$dataset)) {
 #' @export
 black_format_tb <- function(ft, body_font_size = 8, header_font_size = 8,
                             footer_font_size = body_font_size, ...) {
-  ft %>%
-    theme_booktabs() %>%
-    fontsize(size = body_font_size, part = "body") %>%
-    fontsize(size = header_font_size, part = "header") %>%
-    fontsize(size = footer_font_size, part = "footer") %>%
-    bold(part = "header") %>%
-    color(color = "blue", part = "header") %>%
-    border_inner_h(part = "all", border = fp_border(color = "black")) %>%
-    hline_top(part = "all", border = fp_border(color = "black", width = 2)) %>%
+  ft |>
+    theme_booktabs() |>
+    fontsize(size = body_font_size, part = "body") |>
+    fontsize(size = header_font_size, part = "header") |>
+    fontsize(size = footer_font_size, part = "footer") |>
+    bold(part = "header") |>
+    color(color = "blue", part = "header") |>
+    border_inner_h(part = "all", border = fp_border(color = "black")) |>
+    hline_top(part = "all", border = fp_border(color = "black", width = 2)) |>
     hline_bottom(part = "all", border = fp_border(color = "black", width = 2))
 }
 

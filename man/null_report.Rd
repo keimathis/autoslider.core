@@ -22,7 +22,7 @@ library(dplyr)
 library(filters)
 data <- list(
   adsl = eg_adsl,
-  adae = eg_adae \%>\% mutate(AREL = "")
+  adae = eg_adae |> mutate(AREL = "")
 )
 
 null_report()
@@ -39,8 +39,8 @@ t_ae <- function(datasets) {
   return(null_report())
 }
 
-data \%>\%
-  filters::apply_filter("SER_SE") \%>\%
+data |>
+  filters::apply_filter("SER_SE") |>
   t_ae()
 \dontshow{\}) # examplesIf}
 }

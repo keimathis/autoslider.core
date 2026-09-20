@@ -36,7 +36,7 @@ Requires filtering of the datasets (e.g. using SUFFIX in spec.yml)
 \dontshow{if (require('rsvg')) withAutoprint(\{ # examplesIf}
 library(dplyr)
 
-adeg_filtered <- eg_adeg \%>\% filter(
+adeg_filtered <- eg_adeg |> filter(
   PARAMCD == "HR"
 )
 plot_eg <- g_eg_slide(

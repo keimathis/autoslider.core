@@ -46,9 +46,9 @@ test_that("Test table creation of t_ae_pt_slide (safety summary table) prune by 
 })
 
 test_that("Test table creation of t_ae_pt_diff_slide with null_report", {
-  adsl <- eg_adsl %>%
+  adsl <- eg_adsl |>
     dplyr::mutate(TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")))
-  adae <- eg_adae %>%
+  adae <- eg_adae |>
     dplyr::mutate(
       TRT01A = factor(TRT01A, levels = c("A: Drug X", "B: Placebo")),
       ATOXGR = AETOXGR

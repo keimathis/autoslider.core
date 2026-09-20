@@ -66,11 +66,11 @@ write(specs_entry, file = spec_file)
 filters::load_filters(filters, overwrite = TRUE)
 
 data <- list(
-  "adsl" = eg_adsl %>%
+  "adsl" = eg_adsl |>
     mutate(
       FASFL = SAFFL,
       DISTRTFL = sample(c("Y", "N"), size = length(TRT01A), replace = TRUE, prob = c(.1, .9))
-    ) %>%
+    ) |>
     preprocess_t_ds(),
   "adae" = eg_adae,
   "adtte" = eg_adtte,
@@ -78,10 +78,10 @@ data <- list(
   "adlb" = eg_adlb
 )
 
-outputs <- spec_file %>%
-  read_spec() %>%
-  filter_spec(., program %in% c("t_ds_slide", "t_dm_slide", "t_ae_slide")) %>%
-  generate_outputs(datasets = data) %>%
+outputs <- spec_file |>
+  read_spec() |>
+  filter_spec(program %in% c("t_ds_slide", "t_dm_slide", "t_ae_slide")) |>
+  generate_outputs(datasets = data) |>
   decorate_outputs(
     version_label = NULL
   )

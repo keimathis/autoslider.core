@@ -24,8 +24,8 @@ Discontinue table
 }
 \examples{
 library(dplyr)
-adsl <- eg_adsl \%>\%
-  mutate(DISTRTFL = sample(c("Y", "N"), size = nrow(eg_adsl), replace = TRUE, prob = c(.1, .9))) \%>\%
+adsl <- eg_adsl |>
+  mutate(DISTRTFL = sample(c("Y", "N"), size = nrow(eg_adsl), replace = TRUE, prob = c(.1, .9))) |>
   preprocess_t_ds()
 out1 <- t_ds_slide(adsl, "TRT01P")
 print(out1)

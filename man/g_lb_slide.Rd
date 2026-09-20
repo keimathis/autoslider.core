@@ -40,7 +40,7 @@ Requires filtering of the datasets (e.g. using SUFFIX in spec.yml)
 \dontshow{if (require('rsvg')) withAutoprint(\{ # examplesIf}
 library(dplyr)
 
-adlb_filtered <- eg_adlb \%>\% filter(
+adlb_filtered <- eg_adlb |> filter(
   PARAMCD == "CRP"
 )
 plot_lb <- g_lb_slide(

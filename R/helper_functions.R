@@ -13,7 +13,7 @@ mutate_actarm <- function(df,
                             "ATEZOLIZUMAB + TIRAGOLUMAB + PACLITAXEL + CISPLATIN"
                           ),
                           labels = c("Pbo+Pbo+PC", "Tira+Atezo+PC")) {
-  df %>%
+  df |>
     mutate_at(arm_var, ~ factor(explicit_na(sas_na(.)),
       levels = levels,
       labels = labels
@@ -35,13 +35,13 @@ preprocess_t_dd <- function(df,
   assert_that(length(levels) >= 3)
   assert_that(length(labels) >= 3)
 
-  df %>%
+  df |>
     mutate(
       DTHCAT1 = DTHCAT == levels[1],
       DTHCAT2 = DTHCAT == levels[2],
       DTHCAT3 = DTHCAT == levels[3],
       DTHCAT = factor(explicit_na(sas_na(DTHCAT)), levels = levels, labels = labels)
-    ) %>%
+    ) |>
     formatters::var_relabel(
       DTHCAT1 = labels[1],
       DTHCAT2 = labels[2],
@@ -69,13 +69,13 @@ preprocess_t_ds <- function(df,
   assert_that(length(levels) >= 3)
   assert_that(length(labels) >= 3)
 
-  data_adsl <- df %>%
+  data_adsl <- df |>
     # Calculate STDONS
     mutate(STDONS = case_when(
       toupper(EOSSTT) == "ONGOING" & DTHFL == "" & DISTRTFL == "N" ~ "Alive: On Treatment",
       toupper(EOSSTT) == "ONGOING" & DISTRTFL == "Y" ~ "Alive: In Follow-up",
       TRUE ~ ""
-    )) %>%
+    )) |>
     # Process variable
     mutate(STDONS = factor(explicit_na(sas_na(STDONS)), levels = levels, labels = labels))
 }
