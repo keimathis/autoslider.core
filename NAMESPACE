@@ -116,13 +116,6 @@ importFrom(assertthat,
   is.string,
   noNA
 )
-importFrom(checkmate,
-  assert_class,
-  assert_count,
-  assert_flag,
-  assert_number,
-  assert_numeric
-)
 importFrom(cli,cat_bullet)
 importFrom(dplyr,
   all_of,

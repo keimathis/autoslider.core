@@ -3,7 +3,7 @@ test_that("read_metadata reads a yaml file into a named list of token values", {
   metadata <- read_metadata(metadata_file)
 
   expect_type(metadata, "list")
-  expect_true(checkmate::test_named(metadata))
+  expect_true(is_named_list(metadata))
   expect_equal(metadata$study, "BP12345")
 })
 

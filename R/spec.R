@@ -78,9 +78,9 @@ read_spec <- function(spec_file = "spec.yml",
 #' ## Read it into a named list of token values
 #' read_metadata(metadata_file)
 read_metadata <- function(metadata_file = "metadata.yml") {
-  checkmate::assert_file_exists(metadata_file, access = "r")
+  assertthat::assert_that(is.string(metadata_file), assertthat::is.readable(metadata_file))
   metadata <- yaml::read_yaml(metadata_file, eval.expr = TRUE)
-  checkmate::assert_list(metadata, names = "named", .var.name = "metadata file contents")
+  assertthat::assert_that(is.list(metadata), is_named_list(metadata))
   metadata
 }
 
