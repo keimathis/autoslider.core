@@ -55,6 +55,16 @@ test_that("Test some functions in util.R", {
   })
 
 
+  test_that("is_named_list identifies fully named lists", {
+    expect_true(is_named_list(list(a = 1, b = 2)))
+    expect_false(is_named_list(list(1, 2))) # unnamed
+    expect_false(is_named_list(list(a = 1, 2))) # partially named
+    expect_false(is_named_list(stats::setNames(list(1, 2), c("a", "")))) # empty-string name
+    expect_false(is_named_list(1:3)) # not a list
+    expect_error(assertthat::assert_that(is_named_list(list(1, 2))), "flat mapping")
+  })
+
+
   test_that("munge_spaces correctly replaces various whitespace", {
     expect_equal(munge_spaces("hello\tworld"), "hello world")
     expect_equal(munge_spaces("hello\nworld"), "hello world")

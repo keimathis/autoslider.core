@@ -1,3 +1,28 @@
+#' Check if an object is a fully named list
+#'
+#' @description
+#' Determines whether an object is a list where every element has a valid,
+#' non-empty name. This is primarily used as an `assertthat` assertion helper
+#' for validating metadata configurations.
+#'
+#' @param x An R object to test.
+#'
+#' @return A logical scalar.
+#'
+#' @noRd
+
+is_named_list <- function(x) {
+  is.list(x) && !is.null(names(x)) && all(nzchar(names(x)))
+}
+
+assertthat::on_failure(is_named_list) <- function(call, env) {
+  "metadata file must be a flat mapping of named key: value pairs"
+}
+
+
+
+
+
 format_xx <- function(str) {
   tern::format_xx(str)
 }
