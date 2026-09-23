@@ -8,7 +8,7 @@ require("ggplot2")
 set.seed(12893)
 # skip_if_too_deep
 skip_if_too_deep <- function(depth) { # nolintr
-  checkmate::assert_number(depth, lower = 0, upper = 5)
+  assertthat::assert_that(assertthat::is.number(depth) & depth >= 0 & depth <= 5)
 
   testing_depth <- getOption("TESTING_DEPTH")
   if (is.null(testing_depth)) testing_depth <- Sys.getenv("TESTING_DEPTH")

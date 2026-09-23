@@ -24,8 +24,8 @@
 #' apply_tokens("Demographics - Study {study}", list(study = "BP12345"))
 #' apply_tokens(c("Line 1 {study}", "Line 2"), list(study = "BP12345"))
 apply_tokens <- function(text, metadata = NULL) {
-  checkmate::assert_character(text, null.ok = FALSE)
-  checkmate::assert_list(metadata, null.ok = TRUE)
+  assertthat::assert_that(is.character(text))
+  assertthat::assert_that(is.null(metadata) || is.list(metadata))
 
   if (length(text) == 0) {
     return(text)

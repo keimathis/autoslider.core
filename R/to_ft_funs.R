@@ -233,11 +233,15 @@ old_paginate_listing <- function(lsting,
                                  tf_wrap = !is.null(max_width),
                                  max_width = NULL,
                                  verbose = FALSE) {
-  checkmate::assert_class(lsting, "listing_df")
-  checkmate::assert_numeric(colwidths, lower = 0, len = length(listing_dispcols(lsting)), null.ok = TRUE)
-  checkmate::assert_flag(tf_wrap)
-  checkmate::assert_count(max_width, null.ok = TRUE)
-  checkmate::assert_flag(verbose)
+  assertthat::assert_that(inherits(lsting, "listing_df"))
+  assertthat::assert_that(
+    is.null(colwidths) ||
+      (is.numeric(colwidths) && all(colwidths >= 0) &&
+        length(colwidths) == length(rlistings::listing_dispcols(lsting)))
+  )
+  assertthat::assert_that(assertthat::is.flag(tf_wrap))
+  assertthat::assert_that(is.null(max_width) || (assertthat::is.number(max_width) && max_width >= 0))
+  assertthat::assert_that(assertthat::is.flag(verbose))
 
   indx <- formatters::paginate_indices(lsting,
     page_type = page_type,
