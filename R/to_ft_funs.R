@@ -126,17 +126,23 @@ to_flextable.tbl_roche_summary <- function(x, ...) {
 #' convert dgtsummary to flextable
 #'
 #' @param x dgtsummary object
-#' @param lpp Lines (rows) per page; overridden when ppt_height is supplied
+#' @param lpp Lines (rows) per page. If `NULL` (the default), auto-computed
+#'   from `ppt_height`, falling back to a fixed default if that is also `NULL`.
+#'   An explicit value always takes precedence over `ppt_height`.
 #' @param ppt_height Slide height in inches; used to auto-compute lpp
 #' @param ppt_width Slide width in inches; used to scale table columns
 #' @param table_format Function applied to the flextable for styling
 #' @param ... additional arguments, not used
 #' @export
-to_flextable.dgtsummary <- function(x, lpp = 20, ppt_height = NULL, ppt_width = NULL,
+to_flextable.dgtsummary <- function(x, lpp = NULL, ppt_height = NULL, ppt_width = NULL,
                                     table_format = autoslider_format, ...) {
   ft_full <- gtsummary::as_flex_table(x) |> table_format()
 
-  # Scale columns to fit slide width
+  gts_title_reserve_in <- 1.5  # inches reserved above the table for the slide title
+  gts_row_height_fudge <- 1.3  # flextable stores "atleast" row heights; padding
+                                # expands rendered rows beyond this stored minimum
+  gts_default_lpp <- 20L       # fallback when neither lpp nor ppt_height is supplied
+
   if (!is.null(ppt_width)) {
     total_width <- flextable_dim(ft_full)$widths
     if (total_width > ppt_width) {
@@ -144,14 +150,15 @@ to_flextable.dgtsummary <- function(x, lpp = 20, ppt_height = NULL, ppt_width = 
     }
   }
 
-  # Compute lpp from actual row heights and available body area on slide.
-  # flextable stores rowheights as minimum heights ("atleast" mode); apply a 1.3x
-  # safety factor to account for padding expanding rows beyond the stored minimum.
-  if (!is.null(ppt_height)) {
-    header_height <- sum(ft_full$header$rowheights)
-    available_body <- ppt_height - 1.5 - header_height # 1.5in for title + margins
-    row_heights_est <- ft_full$body$rowheights * 1.3
-    lpp <- max(sum(cumsum(row_heights_est) <= available_body), 1L)
+  if (is.null(lpp)) {
+    lpp <- if (!is.null(ppt_height)) {
+      header_height <- sum(ft_full$header$rowheights)
+      available_body <- ppt_height - gts_title_reserve_in - header_height
+      row_heights_est <- ft_full$body$rowheights * gts_row_height_fudge
+      max(sum(cumsum(row_heights_est) <= available_body), 1L)
+    } else {
+      gts_default_lpp
+    }
   }
 
   n_body <- nrow(ft_full$body$dataset)
