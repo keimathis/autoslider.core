@@ -129,12 +129,16 @@ to_flextable.tbl_roche_summary <- function(x, ...) {
 #' @param lpp Lines (rows) per page. If `NULL` (the default), auto-computed
 #'   from `ppt_height`, falling back to a fixed default if that is also `NULL`.
 #'   An explicit value always takes precedence over `ppt_height`.
+#' @param cpp Columns per page. gtsummary tables do not support column
+#'   pagination; this is accepted only so that a warning can be raised when
+#'   the table is too wide for `ppt_width` and would otherwise be silently
+#'   scaled down instead of split.
 #' @param ppt_height Slide height in inches; used to auto-compute lpp
 #' @param ppt_width Slide width in inches; used to scale table columns
 #' @param table_format Function applied to the flextable for styling
 #' @param ... additional arguments, not used
 #' @export
-to_flextable.dgtsummary <- function(x, lpp = NULL, ppt_height = NULL, ppt_width = NULL,
+to_flextable.dgtsummary <- function(x, lpp = NULL, cpp = NULL, ppt_height = NULL, ppt_width = NULL,
                                     table_format = autoslider_format, ...) {
   ft_full <- gtsummary::as_flex_table(x) |> table_format()
 
@@ -143,11 +147,17 @@ to_flextable.dgtsummary <- function(x, lpp = NULL, ppt_height = NULL, ppt_width 
                                 # expands rendered rows beyond this stored minimum
   gts_default_lpp <- 20L       # fallback when neither lpp nor ppt_height is supplied
 
-  if (!is.null(ppt_width)) {
-    total_width <- flextable_dim(ft_full)$widths
-    if (total_width > ppt_width) {
-      ft_full <- width(ft_full, width = dim(ft_full)$widths * ppt_width / total_width)
+  total_width <- flextable_dim(ft_full)$widths
+
+  if (!is.null(ppt_width) && total_width > ppt_width) {
+    if (!is.null(cpp)) {
+      warning(
+        "gtsummary tables do not support column pagination (`t_cpp`/`cpp` is ignored); ",
+        "columns are scaled down to fit the slide width instead.",
+        call. = FALSE
+      )
     }
+    ft_full <- width(ft_full, width = dim(ft_full)$widths * ppt_width / total_width)
   }
 
   if (is.null(lpp)) {
