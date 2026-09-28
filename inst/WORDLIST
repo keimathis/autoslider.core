@@ -4,6 +4,7 @@ ADAE
 ADEG
 ADEX
 ADLB
+ADMH
 ADRS
 ADSL
 ADTR
@@ -32,15 +33,19 @@ LBT
 LLM
 Lil
 MCP
+MHT
 ORCID
 Ollama
 OpenAI
 PARAM
 PARAMCD
+PPTX
+PTs
 PowerShell
 Powerpoint
 Preprocess
 SAE
+SOCs
 TLG
 TLGs
 TRT
@@ -64,6 +69,7 @@ autofit
 autoslider
 catalogue
 cbind
+cdisc
 centralised
 centre
 colspan
@@ -72,6 +78,7 @@ dVTableTree
 decoratedGrob
 decoratedGrobSet
 deepseek
+deterministically
 df
 dgtsummary
 dm
@@ -106,6 +113,8 @@ ph
 ppt
 pptx
 rds
+renderer
+reproducibly
 reusability
 rlistings
 roche
