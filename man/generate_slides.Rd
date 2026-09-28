@@ -10,7 +10,7 @@ generate_slides(
   template = file.path(system.file(package = "autoslider.core"), "theme/basic.pptx"),
   fig_width = 9,
   fig_height = 5,
-  t_lpp = 20,
+  t_lpp = NULL,
   t_cpp = 200,
   l_lpp = 20,
   l_cpp = 150,
@@ -31,10 +31,16 @@ generate_slides(
 \item{fig_height}{figure height in inch}
 
 \item{t_lpp}{An integer specifying the table lines per page \cr
-Specify this optional argument to modify the length of all of the table displays}
+Specify this optional argument to modify the length of all of the table displays.
+Defaults to `NULL`, which auto-fits the table to the slide height (for rtables,
+via [rtables::paginate_table()]; for gtsummary, via a row-height estimate).}
 
 \item{t_cpp}{An integer specifying the table columns per page\cr
-Specify this optional argument to modify the width of all of the table displays}
+Specify this optional argument to modify the width of all of the table displays.
+Only honored for rtables output; gtsummary tables do not support column
+pagination and are instead scaled down to fit when too wide. Explicitly
+setting `t_cpp` also raises a warning for gtsummary tables that need scaling,
+since column pagination was requested but cannot be applied.}
 
 \item{l_lpp}{An integer specifying the listing lines per page\cr
 Specify this optional argument to modify the length of all of the listings display}

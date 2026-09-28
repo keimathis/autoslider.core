@@ -6,7 +6,8 @@
 \usage{
 \method{to_flextable}{dgtsummary}(
   x,
-  lpp = 20,
+  lpp = NULL,
+  cpp = NULL,
   ppt_height = NULL,
   ppt_width = NULL,
   table_format = autoslider_format,
@@ -16,7 +17,14 @@
 \arguments{
 \item{x}{dgtsummary object}
 
-\item{lpp}{Lines (rows) per page; overridden when ppt_height is supplied}
+\item{lpp}{Lines (rows) per page. If `NULL` (the default), auto-computed
+from `ppt_height`, falling back to a fixed default if that is also `NULL`.
+An explicit value always takes precedence over `ppt_height`.}
+
+\item{cpp}{Columns per page. gtsummary tables do not support column
+pagination; this is accepted only so that a warning can be raised when
+the table is too wide for `ppt_width` and would otherwise be silently
+scaled down instead of split.}
 
 \item{ppt_height}{Slide height in inches; used to auto-compute lpp}
 
